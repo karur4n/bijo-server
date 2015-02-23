@@ -102,6 +102,8 @@ GEM
     rake (10.4.2)
     rdoc (4.2.0)
     redis (3.2.1)
+    redis-objects (1.1.0)
+      redis (>= 3.0.2)
     rspec-core (3.2.0)
       rspec-support (~> 3.2.0)
     rspec-expectations (3.2.0)
@@ -161,6 +163,7 @@ DEPENDENCIES
   figaro
   rails (= 4.2.0)
   redis
+  redis-objects
   rspec-rails
   sdoc (~> 0.4.0)
   spring

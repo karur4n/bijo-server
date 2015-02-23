@@ -4,6 +4,7 @@ gem 'rails', '4.2.0'
 
 gem 'sqlite3'
 gem 'redis'
+gem 'redis-objects'
 
 gem 'tumblr_client'
 
