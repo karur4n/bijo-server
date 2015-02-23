@@ -1,5 +1,6 @@
 class Api::V1::SearchController < ApplicationController
   include Client
+  include TumblrClient
 
   before_action :has_valid_query?
 

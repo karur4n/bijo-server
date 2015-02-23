@@ -1,7 +1,6 @@
 require 'active_support/concern'
-require 'json'
 
-module Client
+module TumblrClient
   extend ActiveSupport::Concern
 
   Tumblr.configure do |config|
