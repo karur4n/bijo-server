@@ -21,9 +21,7 @@ module Client
     urls = []
 
     results.each do |res|
-      unless res['type'] == 'photo'
-        next
-      end
+      next unless res['type'] == 'photo'
 
       photos = res['photos']
       photos.each do |photo|
