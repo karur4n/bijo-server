@@ -6,6 +6,9 @@ gem 'sqlite3'
 gem 'redis'
 gem 'redis-objects'
 
+gem 'sidekiq'
+gem 'sidetiq'
+
 gem 'tumblr_client'
 
 gem 'figaro'
