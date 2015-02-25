@@ -4,7 +4,9 @@ gem 'rails', '4.2.0'
 
 gem 'unicorn'
 
-gem 'sqlite3'
+gem 'sqlite3', group: :development
+gem 'pg', group: :production
+
 gem 'redis'
 gem 'redis-objects'
 
