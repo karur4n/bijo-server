@@ -1,7 +1,7 @@
 class GetImagesWorker
   include Sidekiq::Worker
 
-  # sidekiq_options unique: true
+  sidekiq_options unique: true
 
   def perform(id)
     bijo = Bijo.find(id)
