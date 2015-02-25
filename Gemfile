@@ -20,6 +20,8 @@ gem 'tumblr_client'
 
 gem 'figaro'
 
+gem 'sinatra', require: nil
+
 gem 'newrelic_rpm'
 
 # bundle exec rake doc:rails generates the API under doc/api.
