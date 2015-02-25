@@ -1,11 +1,19 @@
 class Api::V1::SearchController < ApplicationController
-  before_action :has_valid_query?
+  before_action :valid_query?
 
   def index
-    if has_valid_query?
-      response = tumblr_client.get_with_tagg(name_query)
-      redis_client.add_name(name_query)
-      render json: response
+    if valid_query?
+      bijo = Bijo.find_or_create_by(name: name_query) do |b|
+        b.referenced_at = DateTime.now
+      end
+
+      if bijo.images.present?
+        render json: bijo.images.offset(rand(bijo.images.count)).first.url
+      else
+        response = tumblr_client.get_with_tagg(name_query)
+        GetImagesWorker.perform_async(bijo.id)
+        render json: response[rand(response.size)]
+      end
     else
       head :bad_request
     end
@@ -17,15 +25,11 @@ class Api::V1::SearchController < ApplicationController
     params[:name]
   end
 
-  def has_valid_query?
+  def valid_query?
     !!name_query && name_query.present?
   end
 
   def tumblr_client
-    @tumblr_client ||= TumblrClient.new
-  end
-
-  def redis_client
-    @redis_client ||= RedisClient.new
+    tumblr_client ||= TumblrClient.new
   end
 end
