@@ -7,6 +7,8 @@ class GetImagesWorker
     bijo = Bijo.find(id)
     tumblr_client = TumblrClient.new
     urls = tumblr_client.get_with_tagg(bijo.name)
+    puts 'In GetImagesWorker: '
+    p urls
     urls.each do |url|
       bijo.images.create(url: url)
     end

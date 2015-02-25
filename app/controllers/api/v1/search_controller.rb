@@ -11,7 +11,9 @@ class Api::V1::SearchController < ApplicationController
         render json: bijo.images.offset(rand(bijo.images.count)).first.url
       else
         response = tumblr_client.get_with_tagg(name_query)
+        puts 'Call GetImagesWorker'
         GetImagesWorker.perform_async(bijo.id)
+        puts 'Called'
         render json: response[rand(response.size)]
       end
     else
