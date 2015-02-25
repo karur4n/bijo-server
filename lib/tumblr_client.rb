@@ -14,7 +14,6 @@ class TumblrClient
     results = @client.tagged(query)
 
     urls = parse_search_results(results)
-    urls.to_json
   end
 
   def parse_search_results(results)
