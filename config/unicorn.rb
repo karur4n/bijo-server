@@ -5,6 +5,7 @@ worker_processes 3
 
 # whatever you had in your unicorn.rb file
 @sidekiq_pid = nil
+run_sidekiq_in_this_thread = ENV["RACK_ENV"]=="development" ? false : true
 
 before_fork do |server, worker|
   Signal.trap 'TERM' do
@@ -15,10 +16,8 @@ before_fork do |server, worker|
   defined?(ActiveRecord::Base) and
     ActiveRecord::Base.connection.disconnect!
 
-  if ENV['RAILS_ENV'] == 'staging' # Sidekiq関連はここ！【更新あり】
-    @sidekiq_pid ||= spawn("bundle exec sidekiq -c 2")
-    Rails.logger.info('Spawned sidekiq #{@sidekiq_pid}')
-  end
+  @sidekiq_pid ||= spawn("bundle exec sidekiq -c 2")
+  Rails.logger.info('Spawned sidekiq #{@sidekiq_pid}')
 end
 
 after_fork do |server, worker|
