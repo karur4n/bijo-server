@@ -8,6 +8,7 @@ gem 'redis-objects'
 
 gem 'sidekiq'
 gem 'sidetiq'
+gem 'sidekiq-unique-jobs'
 
 gem 'tumblr_client'
 
