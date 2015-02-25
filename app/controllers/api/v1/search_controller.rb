@@ -1,6 +1,4 @@
 class Api::V1::SearchController < ApplicationController
-  before_action :valid_query?
-
   def index
     if valid_query?
       bijo = Bijo.find_or_create_by(name: name_query) do |b|
