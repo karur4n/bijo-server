@@ -2,17 +2,17 @@ class Api::V1::SearchController < ApplicationController
   def index
     if valid_query?
       bijo = Bijo.find_or_create_by(name: name_query) do |b|
-        b.referenced_at = DateTime.now
+        now_datetime = DateTime.now
+        b.referenced_at = now_datetime
+        b.crawled_at = now_datetime
       end
 
       if bijo.images.present?
-        render json: bijo.images.offset(rand(bijo.images.count)).first.url
+        render json: bijo.return_urls
       else
-        response = tumblr_client.get_with_tagg(name_query)
-        puts 'Call GetImagesWorker'
+        response = TumblrResponse.new(tumblr_client.tagged(bijo.name))
         GetImagesWorker.perform_async(bijo.id)
-        puts 'Called'
-        render json: response[rand(response.size)]
+        render json: response.urls
       end
     else
       head :bad_request
